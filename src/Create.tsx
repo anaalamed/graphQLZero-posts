@@ -1,6 +1,8 @@
 import { assertAbstractType } from "graphql";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link, Redirect } from "react-router-dom";
+
 
 const createPost = async (input) => {
   const res = await fetch("https://graphqlzero.almansi.me/api", {
@@ -31,32 +33,53 @@ interface Props {
 }
 
 const Create: React.FC<Props> = ({ setData, data }) => {
-  const [info, setinfo] = useState();
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [redirect, setredirect] = useState(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const newPost = await createPost({ title: 'aa', body: 'bbb' });
+  // useEffect(() => {
+  async function fetchData({ title, body }) {
+    try {
+      const newPost = await createPost({ title, body });
+      data.unshift(newPost.data.createPost);
+      setData(data);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+  // fetchData();
+  // }, []);
 
-        // console.log(data);
-        data.unshift(newPost.data.createPost);
-        // console.log(data);
-
-        setData(data);
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-
-  // console.log(info);
+  const handleSubmit = () => {
+    fetchData({ title, body });
+    setredirect(true);
+  }
 
   return (
     <>
       <Title>Create a new post !!!</Title>
-      <p>aaaa</p>
+
+      <Form onSubmit={e => e.preventDefault()}>
+        {/* <label>Title</label> */}
+        <input
+          name="title"
+          type="title"
+          placeholder="Title"
+          onChange={e => setTitle(e.target.value)}
+        />
+
+        {/* <label>Body</label> */}
+        <input
+          name="body"
+          type="body"
+          placeholder="Body"
+          onChange={e => setBody(e.target.value)}
+        />
+
+        <input type="submit" onClick={handleSubmit} />
+      </Form>
+
+      {redirect ? (<Redirect to="/browse"></Redirect>) : null}
     </>
   )
 };
@@ -69,4 +92,18 @@ const Title = styled.h1`
   color: midnightblue;
   text-shadow: 2px 2px 10px;
   font-family: cursive;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  background: blueviolet;
+  border-radius: 1rem;
+  padding: 1rem;
+
+  input { 
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 1rem;
+  }
 `;

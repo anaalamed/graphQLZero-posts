@@ -10,6 +10,7 @@ import DataPost from './DataPost';
 import User from './User';
 import Create from './Create';
 import Browser from './Browse';
+import Home from './Home'
 
 const getPosts = async () => {
   const res = await fetch("https://graphqlzero.almansi.me/api", {
@@ -73,10 +74,8 @@ function App() {
 
       <TopBar></TopBar>
 
-      {/* <Route exact path="/" component={HomePage} /> */}
+      <Route exact path="/" component={Home} />
 
-
-      {/* <Route path="/browse" component={Browser} /> */}
       <Route path="/browse"
         render={(props) => (
           <Browser {...props} data={data} />
