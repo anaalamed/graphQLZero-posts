@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import './App.css';
 import { BrowserRouter, Route } from "react-router-dom";
 
 
@@ -8,13 +7,12 @@ import TopBar from './TopBar';
 import Posts from './Posts';
 import DataPost from './DataPost';
 import User from './User';
-import Create from './Create';
-import Browser from './Browse';
+import Create from './Create'
 
 const getPosts = async () => {
   const res = await fetch("https://graphqlzero.almansi.me/api", {
     "method": "POST",
-    "headers": { "content-type": "application/json" },
+    "headers": { "content-type": "Browselication/json" },
     "body": JSON.stringify({
       variables: {
         "options": {
@@ -46,51 +44,53 @@ const getPosts = async () => {
   return data.data.posts.data;
 }
 
+interface Props {
+  data
+}
 
-function App() {
-  const [data, setData] = useState([]);
+
+const Browse: React.FC<Props> = ({ data }) => {
+  // const [data, setData] = useState([]);
   const [currentPost, setCurrentPost] = useState(1);
   const [currentUser, setCurrentUser] = useState(1);
 
-  console.log(data);
-
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getPosts();
-        setData(data);
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-    fetchData();
-  }, [])
 
   return (
+    <div>
+      <Box>
+        <Posts data={data} setCurrentPost={setCurrentPost} setCurrentUser={setCurrentUser}></Posts>
 
-    <BrowserRouter>
+        <Details>
+          <h2>The Post Data:  🚀</h2>
+          <DataPost id={currentPost}></DataPost>
 
-      <TopBar></TopBar>
+          <h2>User's details 🚀</h2>
+          <User id={currentUser}></User>
+        </Details>
 
-      {/* <Route exact path="/" component={HomePage} /> */}
-
-
-      {/* <Route path="/browse" component={Browser} /> */}
-      <Route path="/browse"
-        render={(props) => (
-          <Browser {...props} data={data} />
-        )} />
-
-      <Route path="/create"
-        render={(props) => (
-          <Create {...props} setData={setData} data={data} />
-        )} />
-
-    </BrowserRouter>
-
+      </Box>
+    </div>
   );
 }
 
-export default App;
+export default Browse;
+
+const Box = styled.div`
+  margin-top: 3.5rem;
+  display: flex;
+  background: #4775f3;
+  border-radius: 1rem;
+  justify-content: center;
+  width: 100%;
+`;
+
+const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid midnightblue;
+  padding-left: 3rem;
+  padding-right: 3rem;
+
+  /* width: 100%; */
+`;
 
