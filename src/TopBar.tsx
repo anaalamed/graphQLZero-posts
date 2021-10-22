@@ -41,13 +41,12 @@ const Header = styled.header`
 const Nav = styled.ul`
   list-style: none;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0;  
 `;
 
 const StyledLink = styled(Link)`
     color: mintcream;
+    text-decoration: none;
     padding: 3rem;
     font-size: 2rem;
+    font-weight: bold;
   `;

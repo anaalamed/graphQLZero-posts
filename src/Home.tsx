@@ -5,24 +5,26 @@ import styled from "styled-components";
 const Post: React.FC = ({ }) => {
 
 
-    return (
-        <Box>
-            <h1>React</h1>
-            <h1>GraphQLZero</h1>
-            <h1>Apollo</h1>
-            <h1>TypeScript</h1>
-        </Box>
-    );
+  return (
+    <Box>
+      <h1>React</h1>
+      <h1>GraphQLZero</h1>
+      <h1>Apollo</h1>
+      <h1>TypeScript</h1>
+    </Box>
+  );
 };
 
 export default Post;
 
 const Box = styled.div`
   margin-top: 10rem;
-  background: #ebebf9; 
+  background: #4775f3; 
   border-radius:10px;
   padding:  1rem;
   font-size: 2rem;
+  color: white;
+  width: 100%;
   `;
 
 const Title = styled.p`

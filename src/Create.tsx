@@ -56,7 +56,7 @@ const Create: React.FC<Props> = ({ setData, data }) => {
   }
 
   return (
-    <>
+    <Box>
       <Title>Create a new post !!!</Title>
 
       <Form onSubmit={e => e.preventDefault()}>
@@ -76,15 +76,23 @@ const Create: React.FC<Props> = ({ setData, data }) => {
           onChange={e => setBody(e.target.value)}
         />
 
-        <input type="submit" onClick={handleSubmit} />
+        <input className="button" type="submit" onClick={handleSubmit} />
       </Form>
 
       {redirect ? (<Redirect to="/browse"></Redirect>) : null}
-    </>
+    </Box>
   )
 };
 
 export default Create;
+
+const Box = styled.div`
+  margin-top: 3.5rem;
+  background: #4775f3;
+  border-radius: 1rem;
+  justify-content: center;
+  width: 100%;
+`;
 
 const Title = styled.h1`
   margin-top: 5rem;  
@@ -92,18 +100,25 @@ const Title = styled.h1`
   color: midnightblue;
   text-shadow: 2px 2px 10px;
   font-family: cursive;
+  text-align: center
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  background: blueviolet;
+  justify-content: center;
   border-radius: 1rem;
   padding: 1rem;
+  width: 20rem;
 
   input { 
     padding: 1rem;
     margin: 1rem;
     border-radius: 1rem;
+  }
+
+  .button {
+    background: midnightblue;
+    color: white;
   }
 `;

@@ -5,13 +5,48 @@ interface Post {
   post
 }
 
+const deletePost = async (id) => {
+  console.log(id)
+  const res = await fetch("https://graphqlzero.almansi.me/api", {
+    "method": "POST",
+    "headers": { "content-type": "application/json" },
+    "body": JSON.stringify({
+      variables: {
+        "id": id
+      },
+      query: `mutation (
+        $id: ID!
+      ) {
+        deletePost(id: $id)
+      }
+      `
+    })
+  })
+  const data = await res.json();
+  return data;
+}
+
 const Post: React.FC<Post> = ({ post }) => {
+
+  const handleDelete = () => {
+    console.log('delete');
+    fetchData(1);
+  }
+
+  async function fetchData(id) {
+    try {
+      const newPost = await deletePost(id);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
 
   return (
     <Box>
       <Title>{post?.title}</Title>
       <Author>{post?.user?.name}</Author>
+      <button onClick={handleDelete}>delete</button>
     </Box>
   );
 };
